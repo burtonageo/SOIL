@@ -4,6 +4,9 @@ project (SOIL)
 find_package (OpenGL REQUIRED)
 include_directories (${OPENGL_INCLUDE_DIR})
 
+set(SOIL_LIBRARIES "SOIL" PARENT_SCOPE)
+set(SOIL_INCLUDE_DIRS "${SOIL_DIR}/include" PARENT_SCOPE)
+
 file (GLOB SOIL_SOURCES src/*.c)
 file (GLOB SOIL_HEADERS src/*.h)
 
