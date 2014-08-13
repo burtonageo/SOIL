@@ -2780,8 +2780,6 @@ static stbi_uc *tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 	int tga_palette_start = get16le(s);
 	int tga_palette_len = get16le(s);
 	int tga_palette_bits = get8u(s);
-	int tga_x_origin = get16le(s);
-	int tga_y_origin = get16le(s);
 	int tga_width = get16le(s);
 	int tga_height = get16le(s);
 	int tga_bits_per_pixel = get8u(s);
@@ -2982,8 +2980,7 @@ static stbi_uc *tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
 	}
 	//	the things I do to get rid of an error message, and yet keep
 	//	Microsoft's C compilers happy... [8^(
-	tga_palette_start = tga_palette_len = tga_palette_bits =
-			tga_x_origin = tga_y_origin = 0;
+	tga_palette_start = tga_palette_len = tga_palette_bits = 0;
 	//	OK, done
 	return tga_data;
 }
