@@ -144,7 +144,8 @@ int
 				{
 					sum_value += orig[index + v*width*channels + u*channels];
 				}
-				resampled[j*mip_width*channels + i*channels + c] = sum_value / block_area;
+				resampled[j*mip_width*channels + i*channels + c] = sum_value /
+					(block_area == 0 ? 1 : block_area);
 			}
 		}
 	}
