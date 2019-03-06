@@ -24,7 +24,7 @@ target_include_directories(${SOIL_TARGET}
 	PUBLIC ${INCLUDE_DIR}
 	PRIVATE "${INCLUDE_DIR}/SOIL")
 
-	target_sources(${SOIL_TARGET}
+target_sources(${SOIL_TARGET}
 	PUBLIC ${INCLUDE_FILES}
 	PRIVATE ${SRC_FILES})
 
