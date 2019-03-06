@@ -1,19 +1,39 @@
-cmake_minimum_required (VERSION 2.6)
-project (SOIL)
+cmake_minimum_required (VERSION 3.2)
+set (SOIL_TARGET soil)
+project (${SOIL_TARGET})
 
-find_package (OpenGL REQUIRED)
-include_directories (${OPENGL_INCLUDE_DIR})
+set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
+set(INCLUDE_FILES
+	"${INCLUDE_DIR}/SOIL/image_DXT.h"
+	"${INCLUDE_DIR}/SOIL/image_helper.h"
+	"${INCLUDE_DIR}/SOIL/SOIL.h"
+	"${INCLUDE_DIR}/SOIL/stb_image_aug.h"
+	"${INCLUDE_DIR}/SOIL/stbi_DDS_aug_c.h"
+	"${INCLUDE_DIR}/SOIL/stbi_DDS_aug.h")
 
-set(SOIL_LIBRARIES "SOIL" PARENT_SCOPE)
-set(SOIL_INCLUDE_DIRS "${SOIL_DIR}/include" PARENT_SCOPE)
+set (SRC_DIR "${PROJECT_SOURCE_DIR}/src")
+set (SRC_FILES
+	"${SRC_DIR}/image_DXT.c"
+	"${SRC_DIR}/image_helper.c"
+	"${SRC_DIR}/SOIL.c"
+	"${SRC_DIR}/stb_image_aug.c")
 
-file (GLOB SOIL_SOURCES src/*.c)
-file (GLOB SOIL_HEADERS src/*.h)
+add_library(${SOIL_TARGET})
 
-add_library(${PROJECT_NAME} STATIC ${SOIL_SOURCES})
+target_include_directories(${SOIL_TARGET}
+	PUBLIC ${INCLUDE_DIR}
+	PRIVATE "${INCLUDE_DIR}/SOIL")
 
-if(APPLE)
-	target_link_libraries (SOIL ${OPENGL_LIBRARIES} "-framework CoreFoundation")
-elseif(APPLE)
-	target_link_libraries (SOIL ${OPENGL_LIBRARIES})
-endif(APPLE)
+	target_sources(${SOIL_TARGET}
+	PUBLIC ${INCLUDE_FILES}
+	PRIVATE ${SRC_FILES})
+
+if (MSVC)
+	target_compile_definitions(${SOIL_TARGET} PRIVATE _CRT_SECURE_NO_WARNINGS=1)
+endif ()
+
+target_compile_options(
+    ${PROJECT_NAME}
+    PRIVATE
+		$<$<CXX_COMPILER_ID:MSVC>:/W0>
+)
